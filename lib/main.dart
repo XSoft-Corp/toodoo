@@ -15,14 +15,14 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context)=> TaskData(),
       child: MaterialApp(
-        // routes: {
-        //   "/" : (context)=> WelcomeScreen(),
-        //   "/login": (context)=> LoginScreen(),
-        //   "/register": (context)=> RegistrationScreen(),
-        //   "/tasksScreen" : (context)=> TasksScreen(),
-        //
-        // },
-        home: TasksScreen(),
+        routes: {
+          "/" : (context)=> WelcomeScreen(),
+          "/login": (context)=> LoginScreen(),
+          "/register": (context)=> RegistrationScreen(),
+          "/tasksScreen" : (context)=> TasksScreen(),
+
+        },
+        initialRoute: "/",
 
 
       ),

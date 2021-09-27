@@ -35,20 +35,17 @@ class TasksScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                CircleAvatar(
-                  child: Icon(
-                    Icons.list,
-                    size: 30.0,
-                    color: Colors.lightBlueAccent,
+                Text(
+                  "Once checked you have 3 seconds to uncheck a task before it's deleted, long press on task to delete instantly",
+                  style: TextStyle(
+                    color: Colors.white
                   ),
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
                 Text(
-                  'Toodoo',
+                  'Welcome :)',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 50.0,
@@ -56,7 +53,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${Provider.of<TaskData>(context).taskCount} Tasks',
+                  'You have ${Provider.of<TaskData>(context).taskCount} tasks today',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -67,8 +64,10 @@ class TasksScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 60.0, top: 10.0),
               decoration: BoxDecoration(
+
+
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),

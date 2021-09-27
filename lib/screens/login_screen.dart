@@ -62,9 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomButton(
                   title: "Login",
                   colour: Colors.cyanAccent,
-                  // callback: (){
-                  //   Navigator.push(context, MaterialPageRoute(builder: (context)=> TasksScreen() ));
-                  // },
+                  callback: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> TasksScreen() ));
+                  },
                 )
 
               ],
