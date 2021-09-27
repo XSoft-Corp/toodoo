@@ -3,6 +3,11 @@ import 'package:toodoo/custom_widgets/custom_field.dart';
 import 'package:toodoo/custom_widgets/custom_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toodoo/screens/task_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+FirebaseAuth _auth = FirebaseAuth.instance;
+FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class LoginScreen extends StatefulWidget {
 
@@ -46,6 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   isPassword: false,
                   hint: "Enter your mail address",
                   validator: (value){},
+                  callback: (value){
+                    email = value;
+
+                  },
 
                 ),
                 SizedBox(
@@ -55,6 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   isPassword: true,
                   hint: "Enter your password",
                   validator: (value){},
+                  callback: (value){
+                    password = value;
+                  },
                 ),
                 SizedBox(
                   height: 20.0,
@@ -62,8 +74,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomButton(
                   title: "Login",
                   colour: Colors.cyanAccent,
-                  callback: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> TasksScreen() ));
+                  callback: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    try{
+                      final newLogin = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                      if(newLogin != null){
+                        setState(() {
+                          showSpinner = false;
+                          Navigator.popAndPushNamed(context, "/tasksScreen");
+                        });
+                      }
+
+                    }catch(e){
+                      return e;
+                    }
+
+
                   },
                 )
 

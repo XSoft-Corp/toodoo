@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toodoo/custom_widgets/custom_button.dart';
 import 'package:toodoo/custom_widgets/custom_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+FirebaseAuth _auth = FirebaseAuth.instance;
+FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class RegistrationScreen extends StatefulWidget {
 
@@ -49,10 +54,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   hint: "Enter your mail address",
                   isPassword: false,
                   validator: (String value){
-                    if( !(value.toLowerCase().contains(".com") && value.toLowerCase().contains("@")) ){
+                    if( !(value.toLowerCase().contains(".") && value.toLowerCase().contains("@")) ){
                       return("Wrong mail address");
                     };
-                  }
+                  },
+                  callback: (value){
+                    email = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
@@ -63,6 +71,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     if( value.length < 6 ){
                       return("come on, add ${6-value.length} more chars :)");
                     }
+                  },
+                  callback: (value){
+                    password = value;
                   },
                   isPassword: true,
                 ),
@@ -77,6 +88,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       return("Username most not exceed 12 characters");
                     }
                   },
+                  callback: (value){
+                    username = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
@@ -84,7 +98,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 CustomButton(
                   title: "Register",
                   colour: Colors.cyanAccent,
-                  callback: (){},
+                  callback: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    try{
+                       final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                       if(newUser!=null){
+                         setState(() {
+                           showSpinner = false;
+                         });
+                         Navigator.popAndPushNamed(context, "/tasksScreen");
+                       }
+                    }catch(e){
+                      print(e);
+                    }
+                  },
                 )
 
 
